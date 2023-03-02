@@ -1,6 +1,6 @@
 <template>
   <span className="cards-counter">
-    <span className="cards-counter__value">{{ moviesCount }}</span> movies found
+    <span className="cards-counter__value">{{ count }}</span> movies found
   </span>
 </template>
 
@@ -9,26 +9,28 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'results-count',
-  props: {
-    moviesCount: {
-      type: Number,
-      required: true,
-    },
+  props: ['moviesCount'],
+  data() {
+    return {
+      count: this.moviesCount,
+    };
   },
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "~@/global.scss";
+
 .cards-counter {
   font-style: normal;
   font-weight: normal;
-  font-size: 20px;
-  line-height: 24px;
-  /* color: #ffffff; */
-  margin: 24px 57px 28px;
-}
+  font-size: $font-size-xs;
+  line-height: $line-height-xs;
+  color: $white-color;
+  margin: 24px 57px;
 
-.cards-counter {
-  font-weight: bold;
+  &__value {
+    font-weight: bold;
+  }
 }
 </style>

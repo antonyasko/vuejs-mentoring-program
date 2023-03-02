@@ -15,9 +15,11 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "~@/global.scss";
+
 .footer {
-  background-color: #424242;
+  background-color: $gray-color;
   height: 70px;
   display: flex;
   justify-content: center;
