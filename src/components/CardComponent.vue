@@ -1,9 +1,9 @@
 <template>
   <li class="card">
-    <img class="card__poster" :src="movie.movieUrl" :alt="movie.title" />
+    <v-lazy-image class="card__poster" :src="movie.posterurl" :alt="movie.title" />
     <div class="card__description">
       <p class="card__description__title">{{ movie.title }}</p>
-      <p class="card__description__genre">{{ movie.genre.join(", ") }}</p>
+      <p class="card__description__genre">{{ movie.genres.join(", ") }}</p>
       <p class="card__description__release-date">
         {{ new Date(movie.releaseDate).getFullYear() }}
       </p>
@@ -13,10 +13,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import VLazyImage from 'v-lazy-image';
 
 export default defineComponent({
-  name: 'footer-component',
+  name: 'card-component',
   props: ['card'],
+
+  components: { VLazyImage },
 
   data() {
     return { movie: this.card };
