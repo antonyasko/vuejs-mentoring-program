@@ -1,7 +1,5 @@
 <template>
-  <h2 className="logo">
-    <span className="logo-partial">netflix</span>roulette
-  </h2>
+  <h2 class="logo"><span class="logo-partial">netflix</span>roulette</h2>
 </template>
 
 <script lang="ts">
@@ -12,21 +10,23 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "~@/global.scss";
+
 .logo {
   font-style: normal;
   font-weight: normal;
-  font-size: 20px;
-  line-height: 24px;
-  color: #f65261;
+  font-size: $font-size-xs;
+  line-height: $line-height-xs;
+  color: $dark-indian-red-color;
   width: min-content;
   padding: 15px 0;
   margin: 0 36px;
   z-index: 1;
   position: relative;
-}
 
-.logo-partial {
-  font-weight: bold;
+  &-partial {
+    font-weight: bold;
+  }
 }
 </style>
