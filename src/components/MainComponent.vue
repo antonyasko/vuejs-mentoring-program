@@ -5,7 +5,7 @@
       <toggler-component title="sort by" v-bind:actions="sortFilters" />
     </div>
     <cards-component v-if="cards.length" :cards="cards" />
-    <h2 v-if="cards.length === 0" className="no-results-message">No films found</h2>
+    <h2 v-if="cards.length === 0" class="no-results-message">No films found</h2>
   </main>
 </template>
 
