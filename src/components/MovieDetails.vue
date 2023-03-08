@@ -2,19 +2,19 @@
   <div class="movie-details">
     <img
       class="movie-details__poster"
-      :alt="store.movieDetails.title"
-      :src="store.movieDetails.posterurl"
+      :alt="store.state.movieDetails.title"
+      :src="store.state.movieDetails.posterurl"
     />
     <h2 class="movie-details__heading">
-      <p class="movie-details__heading__title">{{ store.movieDetails.title }}</p>
+      <p class="movie-details__heading__title">{{ store.state.movieDetails.title }}</p>
       <p class="movie-details__heading__rating">{{ rating }}</p>
     </h2>
     <p class="movie-details__genres">{{ genres }}</p>
     <p class="movie-details__release-date">
-      {{ new Date(store.movieDetails.releaseDate).getFullYear() }}
+      {{ new Date(store.state.movieDetails.releaseDate).getFullYear() }}
     </p>
     <p class="movie-details__duration">{{ duration }}</p>
-    <p class="movie-details__storyline">{{ store.movieDetails.storyline }}</p>
+    <p class="movie-details__storyline">{{ store.state.movieDetails.storyline }}</p>
   </div>
 </template>
 
@@ -31,15 +31,15 @@ export default defineComponent({
 
   computed: {
     genres() {
-      return store.movieDetails.genres.join(', ');
+      return store.state.movieDetails.genres.join(', ');
     },
     rating() {
-      const ratingVotes = store.movieDetails.ratings;
+      const ratingVotes = store.state.movieDetails.ratings;
 
       return (ratingVotes.reduce((s, a) => s + a, 0) / ratingVotes.length).toFixed(1);
     },
     duration() {
-      return `${store.movieDetails.duration.slice(2, -1)} min`;
+      return `${store.state.movieDetails.duration.slice(2, -1)} min`;
     },
   },
 });

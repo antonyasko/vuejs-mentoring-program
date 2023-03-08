@@ -30,7 +30,7 @@ export default defineComponent({
   },
   methods: {
     onCardClick() {
-      store.setMovieDetails(this.card);
+      store.commit('setMovieDetails', this.card);
       router.push({ path: '/details' });
     },
   },
