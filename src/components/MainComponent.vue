@@ -5,25 +5,30 @@
       <toggler-component title="sort by" v-bind:actions="sortFilters" />
     </div>
     <cards-component v-if="cards.length" :cards="cards" />
-    <h2 v-if="cards.length === 0" className="no-results-message">No films found</h2>
+    <h2 v-if="cards.length === 0" class="no-results-message">No films found</h2>
   </main>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { cardsData } from '@/mockData';
 import ResultsCount from './ResultsCount.vue';
 import CardsComponent from './CardsComponent.vue';
 import TogglerComponent from './TogglerComponent.vue';
+import store from '../store';
 
 export default defineComponent({
   name: 'main-component',
 
   data() {
     return {
-      cards: cardsData,
+      // cards: store.state.cards,
       sortFilters: ['release date', 'rating'],
     };
+  },
+  computed: {
+    cards() {
+      return store.state.cards;
+    },
   },
 
   components: { CardsComponent, ResultsCount, TogglerComponent },
