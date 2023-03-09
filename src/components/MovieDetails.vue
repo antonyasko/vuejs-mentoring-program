@@ -31,12 +31,10 @@ export default defineComponent({
 
   computed: {
     genres() {
-      return store.state.movieDetails.genres.join(', ');
+      return store.state.movieDetails.genre;
     },
     rating() {
-      const ratingVotes = store.state.movieDetails.ratings;
-
-      return (ratingVotes.reduce((s, a) => s + a, 0) / ratingVotes.length).toFixed(1);
+      return store.state.movieDetails.rating.toFixed(1);
     },
     duration() {
       return `${store.state.movieDetails.duration.slice(2, -1)} min`;

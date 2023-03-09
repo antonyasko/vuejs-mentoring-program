@@ -1,10 +1,16 @@
 <template>
   <main class="main-content">
     <div class="cards-navigation">
-      <results-count v-if="cards.length" :movies-count="cards.length" />
-      <toggler-component title="sort by" v-bind:actions="sortFilters" />
+      <results-count v-if="cards.length" v-bind:movies-count="cards.length" />
+      <toggler-component
+        v-if="!cards.length"
+        title="sort by"
+        name="sortBy"
+        mutation="setSortBy"
+        v-bind:actions="sortFilters"
+      />
     </div>
-    <cards-component v-if="cards.length" :cards="cards" />
+    <cards-component v-if="cards.length" />
     <h2 v-if="cards.length === 0" class="no-results-message">No films found</h2>
   </main>
 </template>
@@ -21,13 +27,15 @@ export default defineComponent({
 
   data() {
     return {
-      // cards: store.state.cards,
-      sortFilters: ['release date', 'rating'],
+      sortFilters: [
+        { label: 'release date', name: 'releaseDate' },
+        { label: 'rating', name: 'rating' },
+      ],
     };
   },
   computed: {
     cards() {
-      return store.state.cards;
+      return store.getters.getCards;
     },
   },
 
