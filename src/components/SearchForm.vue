@@ -10,13 +10,22 @@
       />
       <button class="search-form__button" type="button" @click="onButtonClick">Search</button>
     </form>
-    <toggler-component title="search by" :actions="['title', 'genre']" />
+    <toggler-component
+      title="search by"
+      name="searchBy"
+      mutation="setSearchBy"
+      :actions="[
+        { label: 'title', name: 'title' },
+        { label: 'genre', name: 'genre' },
+      ]"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import TogglerComponent from './TogglerComponent.vue';
+import store from '../store';
 
 export default defineComponent({
   name: 'search-form',
@@ -25,10 +34,12 @@ export default defineComponent({
   data() {
     return {
       inputText: '',
-      onButtonClick() {
-        console.log('What do you want to watch?', this.inputText);
-      },
     };
+  },
+  methods: {
+    onButtonClick() {
+      store.commit('setSearchValue', this.inputText);
+    },
   },
 });
 </script>

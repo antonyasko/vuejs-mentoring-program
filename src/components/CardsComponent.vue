@@ -7,14 +7,20 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CardComponent from './CardComponent.vue';
+import store from '../store';
 
 export default defineComponent({
   name: 'cards-component',
-  props: ['cards'],
-  data() {
-    return {
-      movies: this.cards,
-    };
+  // props: ['cards'],
+  // data() {
+  //   return {
+  //     movies: this.cards,
+  //   };
+  // },
+  computed: {
+    movies() {
+      return store.getters.getCards;
+    },
   },
 
   components: { CardComponent },

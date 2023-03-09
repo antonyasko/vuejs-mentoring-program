@@ -1,29 +1,42 @@
 <template>
   <main class="main-content">
     <div class="cards-navigation">
-      <results-count v-if="cards.length" :movies-count="cards.length" />
-      <toggler-component title="sort by" v-bind:actions="sortFilters" />
+      <results-count v-if="cards.length" v-bind:movies-count="cards.length" />
+      <toggler-component
+        v-if="!cards.length"
+        title="sort by"
+        name="sortBy"
+        mutation="setSortBy"
+        v-bind:actions="sortFilters"
+      />
     </div>
-    <cards-component v-if="cards.length" :cards="cards" />
-    <h2 v-if="cards.length === 0" className="no-results-message">No films found</h2>
+    <cards-component v-if="cards.length" />
+    <h2 v-if="cards.length === 0" class="no-results-message">No films found</h2>
   </main>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { cardsData } from '@/mockData';
 import ResultsCount from './ResultsCount.vue';
 import CardsComponent from './CardsComponent.vue';
 import TogglerComponent from './TogglerComponent.vue';
+import store from '../store';
 
 export default defineComponent({
   name: 'main-component',
 
   data() {
     return {
-      cards: cardsData,
-      sortFilters: ['release date', 'rating'],
+      sortFilters: [
+        { label: 'release date', name: 'releaseDate' },
+        { label: 'rating', name: 'rating' },
+      ],
     };
+  },
+  computed: {
+    cards() {
+      return store.getters.getCards;
+    },
   },
 
   components: { CardsComponent, ResultsCount, TogglerComponent },
