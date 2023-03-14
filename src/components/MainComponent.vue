@@ -3,7 +3,6 @@
     <div class="cards-navigation">
       <results-count v-if="cards.length" v-bind:movies-count="cards.length" />
       <toggler-component
-        v-if="!cards.length"
         title="sort by"
         name="sortBy"
         mutation="setSortBy"
