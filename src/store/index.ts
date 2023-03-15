@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import { ICardData, cardsData as cards } from '../mockData';
+import { ICardData } from '../mockData';
 
 type SearchBy = 'title' | 'genre';
 type SortBy = 'releaseDate' | 'rating';
@@ -20,7 +20,7 @@ interface State {
 export default createStore<State>({
   state() {
     return {
-      cardsData: cards,
+      cardsData: [],
       movieDetails: {} as ICard,
       searchValue: '',
       searchBy: 'title',
@@ -61,7 +61,19 @@ export default createStore<State>({
     setSearchValue(state, searchValue: string) {
       state.searchValue = searchValue;
     },
+    setCardsData(state, cardsData: ICardData[]) {
+      state.cardsData = cardsData;
+    },
   },
-  // actions: {},
+  actions: {
+    fetchAllMovies(context) {
+      return fetch('https://tame-erin-pike-toga.cyclic.app/movies')
+        .then((response) => response.json())
+        .then((data: ICardData[]) => {
+          context.commit('setCardsData', data);
+        })
+        .catch((err) => console.error(err));
+    },
+  },
   // modules: {},
 });
