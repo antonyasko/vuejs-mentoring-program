@@ -31,7 +31,7 @@ export default defineComponent({
   methods: {
     onCardClick() {
       store.commit('setMovieDetails', this.card);
-      router.push({ path: '/details' });
+      router.push({ path: `/details/${this.card.id}` });
     },
   },
 });
