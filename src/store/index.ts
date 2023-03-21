@@ -9,7 +9,7 @@ type ICard = Omit<ICardData, 'genres' | 'ratings'> & {
   rating: number;
 };
 
-interface State {
+export interface State {
   cardsData: ICardData[];
   movieDetails: ICard;
   searchValue: string;
@@ -17,7 +17,7 @@ interface State {
   sortBy: SortBy;
 }
 
-export default createStore<State>({
+const store = createStore<State>({
   state() {
     return {
       cardsData: [],
@@ -77,3 +77,5 @@ export default createStore<State>({
   },
   // modules: {},
 });
+
+export default store;

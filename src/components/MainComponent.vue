@@ -1,7 +1,7 @@
 <template>
   <main class="main-content">
     <div class="cards-navigation">
-      <results-count v-if="cards.length" v-bind:movies-count=cards.length />
+      <results-count v-bind:movies-count="cards.length" />
       <toggler-component
         title="sort by"
         name="sortBy"
@@ -10,16 +10,16 @@
       />
     </div>
     <cards-component v-if="cards.length" />
-    <h2 v-if="cards.length === 0" class="no-results-message">No films found</h2>
+    <h2 v-if="cards.length === 0" class="error-message">No films found</h2>
   </main>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
+import { useStore } from 'vuex';
 import ResultsCount from './ResultsCount.vue';
 import CardsComponent from './CardsComponent.vue';
 import TogglerComponent from './TogglerComponent.vue';
-import store from '../store';
 
 export default defineComponent({
   name: 'main-component',
@@ -33,14 +33,17 @@ export default defineComponent({
     };
   },
 
-  created() {
-    store.dispatch('fetchAllMovies');
+  setup() {
+    const { dispatch, getters } = useStore();
+
+    return {
+      dispatch,
+      cards: computed(() => getters.getCards),
+    };
   },
 
-  computed: {
-    cards() {
-      return store.getters.getCards;
-    },
+  created() {
+    this.dispatch('fetchAllMovies');
   },
 
   components: { CardsComponent, ResultsCount, TogglerComponent },
@@ -51,11 +54,6 @@ export default defineComponent({
 @import "~@/global.scss";
 
 .main-content {
-  background-color: $dark-gray-color;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
   .cards-navigation {
     display: flex;
     justify-content: space-between;
@@ -63,14 +61,6 @@ export default defineComponent({
     width: 100%;
     position: relative;
     top: -72px;
-  }
-
-  .no-results-message {
-    font-size: $font-size-xxl;
-    font-weight: bold;
-    line-height: $line-height-xxl;
-    color: $white-color;
-    margin: 128px auto;
   }
 }
 </style>

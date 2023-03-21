@@ -15,32 +15,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 import { ICardData } from '@/mockData';
 import ApplicationLogo from './ApplicationLogo.vue';
 import SearchForm from './SearchForm.vue';
 import MovieDetails from './MovieDetails.vue';
-import store from '../store';
-import router from '../router';
 
 export default defineComponent({
   name: 'header-component',
 
   components: { ApplicationLogo, MovieDetails, SearchForm },
 
-  data() {
-    return { store };
-  },
-  computed: {
-    movieDetailsId() {
-      return store.state.movieDetails.id;
-    },
-  },
-  methods: {
-    onBackToSearchClick() {
-      store.commit('setMovieDetails', {} as ICardData);
-      router.push({ path: '/' });
-    },
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    return {
+      onBackToSearchClick() {
+        store.commit('setMovieDetails', {} as ICardData);
+        router.push({ path: '/' });
+      },
+      movieDetailsId: computed(() => store.state.movieDetails.id),
+    };
   },
 });
 </script>
