@@ -1,5 +1,5 @@
 <template>
-  <footer className="footer">
+  <footer class="footer">
     <application-logo />
   </footer>
 </template>

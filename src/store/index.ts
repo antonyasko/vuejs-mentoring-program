@@ -1,14 +1,30 @@
-import { createStore } from 'vuex';
+import { reactive } from 'vue';
+import { ICardData } from '../mockData';
+// import { createStore } from 'vuex';
 
-export default createStore({
-  state: {
+// export default createStore({
+//   state: {
+//   },
+//   getters: {
+//   },
+//   mutations: {
+//   },
+//   actions: {
+//   },
+//   modules: {
+//   },
+// });
+
+interface IStore {
+  movieDetails: ICardData,
+  setMovieDetails(movie: ICardData): void
+}
+
+const store = reactive({
+  movieDetails: {},
+  setMovieDetails(movie) {
+    this.movieDetails = movie;
   },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  },
-});
+} as IStore);
+
+export default store;

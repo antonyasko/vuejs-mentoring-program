@@ -37,8 +37,4 @@ export default defineComponent({
   border: none;
   cursor: pointer;
 }
-
-.logo-partial {
-  font-weight: bold;
-}
 </style>

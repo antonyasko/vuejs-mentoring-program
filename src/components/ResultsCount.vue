@@ -1,6 +1,6 @@
 <template>
-  <span className="cards-counter">
-    <span className="cards-counter__value">{{ count }}</span> movies found
+  <span class="cards-counter">
+    <span class="cards-counter__value">{{ count }}</span> movies found
   </span>
 </template>
 

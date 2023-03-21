@@ -1,9 +1,9 @@
 <template>
-  <li class="card">
-    <img class="card__poster" :src="movie.movieUrl" :alt="movie.title" />
+  <li class="card" @click="onCardClick" @keydown="onCardClick">
+    <v-lazy-image class="card__poster" :src="movie.posterurl" :alt="movie.title" />
     <div class="card__description">
       <p class="card__description__title">{{ movie.title }}</p>
-      <p class="card__description__genre">{{ movie.genre.join(", ") }}</p>
+      <p class="card__description__genres">{{ movie.genres.join(", ") }}</p>
       <p class="card__description__release-date">
         {{ new Date(movie.releaseDate).getFullYear() }}
       </p>
@@ -13,13 +13,26 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import VLazyImage from 'v-lazy-image';
+import store from '../store';
+import router from '../router';
 
 export default defineComponent({
-  name: 'footer-component',
+  name: 'card-component',
   props: ['card'],
 
+  components: { VLazyImage },
+
   data() {
-    return { movie: this.card };
+    return { movie: this.card, store };
+  },
+  methods: {
+    onCardClick() {
+      store.setMovieDetails(this.card);
+      router.push({ path: '/details' });
+    },
   },
 });
 </script>
@@ -46,7 +59,7 @@ export default defineComponent({
     top: 430px;
 
     &__title,
-    &__genre,
+    &__genres,
     &__release-date {
       margin: 0;
       color: $white-color;
@@ -61,12 +74,12 @@ export default defineComponent({
     }
 
     &__title,
-    &__genre {
+    &__genres {
       text-align: start;
     }
 
     &__release-date,
-    &__genre {
+    &__genres {
       font-size: $font-size-s;
     }
 
@@ -77,7 +90,7 @@ export default defineComponent({
       margin-top: 16px;
     }
 
-    &__genre {
+    &__genres {
       width: 323px;
       opacity: 0.5;
       margin-top: 8px;
