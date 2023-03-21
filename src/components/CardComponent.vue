@@ -3,7 +3,7 @@
     <v-lazy-image class="card__poster" :src="movie.posterurl" :alt="movie.title" />
     <div class="card__description">
       <p class="card__description__title">{{ movie.title }}</p>
-      <p class="card__description__genres">{{ movie.genres.join(", ") }}</p>
+      <p class="card__description__genres">{{ movie.genre }}</p>
       <p class="card__description__release-date">
         {{ new Date(movie.releaseDate).getFullYear() }}
       </p>

@@ -2,42 +2,39 @@
   <div class="toggler">
     <p class="toggler__title">{{ title }}</p>
     <button
+      :name="action.name"
       v-for="action in actions"
-      v-bind:key="action"
+      v-bind:key="action.name"
       @click="onClick"
       class="toggler__control"
-      :class="{ active: action === activeButton }"
+      :class="{ active: action.name === activeButton }"
     >
-      {{ action }}
+      {{ action.label }}
     </button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import store from '../store';
 
 export default defineComponent({
+  props: ['actions', 'name', 'mutation', 'title'],
+
   name: 'toggler-component',
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    actions: {
-      type: [String],
-      required: true,
-    },
-  },
 
   data() {
     return {
-      activeButton: this.actions[0],
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      activeButton: store.state[this.name],
     };
   },
 
   methods: {
     onClick(e: Event) {
-      this.activeButton = (e.target as HTMLButtonElement).textContent as string;
+      this.activeButton = (e.target as HTMLButtonElement).name;
+      store.commit(this.mutation, this.activeButton);
     },
   },
 });
@@ -55,7 +52,8 @@ export default defineComponent({
     line-height: $line-height-xs;
   }
 
-  &__title, &__control {
+  &__title,
+  &__control {
     padding: 5px 20px;
     font-style: normal;
     font-weight: 500;
@@ -82,6 +80,5 @@ export default defineComponent({
       background-color: $dark-indian-red-color;
     }
   }
-
 }
 </style>
