@@ -1,16 +1,16 @@
 <template>
-  <header class="header" :class="{ 'with-movie-details': !!store.movieDetails.id }">
+  <header class="header" :class="{ 'with-movie-details': !!movieDetailsId }">
     <application-logo />
-    <search-form v-if="!store.movieDetails.id" />
+    <search-form v-if="!movieDetailsId" />
     <button
       @click="onBackToSearchClick"
-      v-if="!!store.movieDetails.id"
+      v-if="!!movieDetailsId"
       class="header__back-to-search"
       type="button"
     >
       <img class="card__more-button__icon" src="../assets/search.svg" alt="search" />
     </button>
-    <movie-details v-if="!!store.movieDetails.id" />
+    <movie-details v-if="!!movieDetailsId" />
   </header>
 </template>
 
@@ -31,9 +31,14 @@ export default defineComponent({
   data() {
     return { store };
   },
+  computed: {
+    movieDetailsId() {
+      return store.state.movieDetails.id;
+    },
+  },
   methods: {
     onBackToSearchClick() {
-      store.setMovieDetails({} as ICardData);
+      store.commit('setMovieDetails', {} as ICardData);
       router.push({ path: '/' });
     },
   },

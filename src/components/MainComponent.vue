@@ -11,19 +11,24 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { cardsData } from '@/mockData';
 import ResultsCount from './ResultsCount.vue';
 import CardsComponent from './CardsComponent.vue';
 import TogglerComponent from './TogglerComponent.vue';
+import store from '../store';
 
 export default defineComponent({
   name: 'main-component',
 
   data() {
     return {
-      cards: cardsData,
+      // cards: store.state.cards,
       sortFilters: ['release date', 'rating'],
     };
+  },
+  computed: {
+    cards() {
+      return store.state.cards;
+    },
   },
 
   components: { CardsComponent, ResultsCount, TogglerComponent },
