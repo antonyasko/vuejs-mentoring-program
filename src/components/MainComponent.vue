@@ -1,7 +1,7 @@
 <template>
   <main class="main-content">
     <div class="cards-navigation">
-      <results-count v-if="cards.length" v-bind:movies-count="cards.length" />
+      <results-count v-if="cards.length" v-bind:movies-count=cards.length />
       <toggler-component
         title="sort by"
         name="sortBy"
@@ -32,6 +32,11 @@ export default defineComponent({
       ],
     };
   },
+
+  created() {
+    store.dispatch('fetchAllMovies');
+  },
+
   computed: {
     cards() {
       return store.getters.getCards;

@@ -11,7 +11,7 @@ import store from '../store';
 
 export default defineComponent({
   name: 'cards-component',
-  // props: ['cards'],
+  props: ['cards'],
   // data() {
   //   return {
   //     movies: this.cards,
