@@ -2,43 +2,41 @@
   <div class="movie-details">
     <img
       class="movie-details__poster"
-      :alt="store.state.movieDetails.title"
-      :src="store.state.movieDetails.posterurl"
+      :alt="title"
+      :src="posterurl"
     />
     <h2 class="movie-details__heading">
-      <p class="movie-details__heading__title">{{ store.state.movieDetails.title }}</p>
+      <p class="movie-details__heading__title">{{ title }}</p>
       <p class="movie-details__heading__rating">{{ rating }}</p>
     </h2>
     <p class="movie-details__genres">{{ genres }}</p>
     <p class="movie-details__release-date">
-      {{ new Date(store.state.movieDetails.releaseDate).getFullYear() }}
+      {{ new Date(releaseDate).getFullYear() }}
     </p>
     <p class="movie-details__duration">{{ duration }}</p>
-    <p class="movie-details__storyline">{{ store.state.movieDetails.storyline }}</p>
+    <p class="movie-details__storyline">{{ storyline }}</p>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import store from '../store';
+import { computed, defineComponent } from 'vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   name: 'movie-details',
 
-  data() {
-    return { store };
-  },
+  setup() {
+    const { state } = useStore();
 
-  computed: {
-    genres() {
-      return store.state.movieDetails.genre;
-    },
-    rating() {
-      return store.state.movieDetails.rating.toFixed(1);
-    },
-    duration() {
-      return `${store.state.movieDetails.duration.slice(2, -1)} min`;
-    },
+    return {
+      genres: computed(() => state.movieDetails.genre),
+      rating: computed(() => state.movieDetails.rating.toFixed(1)),
+      duration: computed(() => `${state.movieDetails.duration.slice(2, -1)} min`),
+      title: computed(() => state.movieDetails.title),
+      posterurl: computed(() => state.movieDetails.posterurl),
+      releaseDate: computed(() => state.movieDetails.releaseDate),
+      storyline: computed(() => state.movieDetails.storyline),
+    };
   },
 });
 </script>

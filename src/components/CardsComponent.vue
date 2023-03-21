@@ -5,22 +5,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
+import { useStore } from 'vuex';
 import CardComponent from './CardComponent.vue';
-import store from '../store';
 
 export default defineComponent({
   name: 'cards-component',
-  props: ['cards'],
+  // props: ['cards'],
   // data() {
   //   return {
   //     movies: this.cards,
   //   };
   // },
-  computed: {
-    movies() {
-      return store.getters.getCards;
-    },
+  setup() {
+    const store = useStore();
+
+    return {
+      movies: computed(() => store.getters.getCards),
+    };
   },
 
   components: { CardComponent },

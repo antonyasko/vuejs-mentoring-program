@@ -13,11 +13,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import VLazyImage from 'v-lazy-image';
-import store from '../store';
-import router from '../router';
 
 export default defineComponent({
   name: 'card-component',
@@ -26,14 +26,23 @@ export default defineComponent({
   components: { VLazyImage },
 
   data() {
-    return { movie: this.card, store };
+    return { movie: this.card };
   },
-  methods: {
-    onCardClick() {
-      store.commit('setMovieDetails', this.card);
-      router.push({ path: `/details/${this.card.id}` });
-    },
+
+  setup(props) {
+    const store = useStore();
+    const router = useRouter();
+
+    return {
+      onCardClick() {
+        store.commit('setMovieDetails', props.card);
+        router.push({ path: `/details/${props.card.id}` });
+      },
+    };
   },
+
+  // methods: {
+  // },
 });
 </script>
 

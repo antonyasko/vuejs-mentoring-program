@@ -15,11 +15,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
+import { useStore } from 'vuex';
 import ResultsCount from './ResultsCount.vue';
 import CardsComponent from './CardsComponent.vue';
 import TogglerComponent from './TogglerComponent.vue';
-import store from '../store';
 
 export default defineComponent({
   name: 'main-component',
@@ -33,14 +33,17 @@ export default defineComponent({
     };
   },
 
-  created() {
-    store.dispatch('fetchAllMovies');
+  setup() {
+    const { dispatch, getters } = useStore();
+
+    return {
+      dispatch,
+      cards: computed(() => getters.getCards),
+    };
   },
 
-  computed: {
-    cards() {
-      return store.getters.getCards;
-    },
+  created() {
+    this.dispatch('fetchAllMovies');
   },
 
   components: { CardsComponent, ResultsCount, TogglerComponent },
